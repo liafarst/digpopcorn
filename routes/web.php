@@ -16,6 +16,7 @@ Route::get('/', function () {
 })->name('main');
 
 Route::get('/dashboard', 'OrdersController@index')->name('dashboard');
+Route::post('/dashboard', 'OrdersController@dashboard');
 
 Route::get('/impressum', function () {
     return view('pages.impressum');

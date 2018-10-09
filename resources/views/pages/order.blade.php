@@ -81,17 +81,8 @@
         <div class="row d-none" id="step-2">
             <div class="col-md-12">
                 <h3 class="font-weight-bold pl-0 my-4"><strong>Abholung</strong></h3>
-                <h1>ETA: 2 Minuten</h1>
+                <h1>Geschätzte Zeit: <span id="ETA"></span></h1>
                 <img src="{{ URL::asset('images/map.png') }}" alt="" style="width:400px">
-                <div class="d-inline-block ml-3" style="vertical-align:top;">
-                    <h2>Stände</h2>
-                    <ul>
-                        <li>5: USU</li>
-                        <li>23: LogObject</li>
-                        <li>38: TOP Mehrwert</li>
-                    </ul>
-                </div>
-                <br>
             </div>
         </div>
 

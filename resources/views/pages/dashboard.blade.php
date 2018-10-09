@@ -18,15 +18,21 @@
                     </div>
 
                     <div class="table100-body js-pscroll">
-                        <table>
+                        <table id="dashboardTable">
                             <tbody>
-                            @foreach($orders as $order)
-                            <tr class="row100 body">
-                                <td class="cell100 column1">#{{ $order->id }}</td>
-                                <td class="cell100 column2">{{ App\Helpers\CustomHelpers::initials($order->name) }}</td>
-                                <td class="cell100 column4">02:30</td>
-                            </tr>
-                            @endforeach
+                            @if(count($orders) > 0)
+                                @foreach($orders as $order)
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">#{{ $order->id }}</td>
+                                        <td class="cell100 column2">{{ App\Helpers\CustomHelpers::initials($order->name) }}</td>
+                                        <td class="cell100 column4">{{ $order->ETA }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="row100 body">
+                                    <td colspan="5"><h5>Keine Bestellungen</h5></td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>

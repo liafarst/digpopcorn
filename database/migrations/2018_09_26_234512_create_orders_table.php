@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('company');
-            $table->string('station');
+            $table->string('ETA');
             $table->enum('status', ['ORDERED', 'IN PROGRESS', 'READY TO COLLECT', 'RECEIVED']);
             $table->timestamps();
         });

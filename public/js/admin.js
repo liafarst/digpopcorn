@@ -96,7 +96,7 @@ $(document).ready(function () {
             data: {orderID: orderID, action: action},
             success: function (data) {
                 if (data.message) {
-                    // TODO
+                    // TODO animation
                     checkOrders();
                 } else {
                     alert("Something went wrong.");

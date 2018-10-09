@@ -8,7 +8,7 @@ use App\Order;
 class OrdersController extends Controller {
 
     public static function index() {
-        $orders = Order::all();
+        $orders = Order::where('status', 'IN PROGRESS')->get();
 
         return view('pages.dashboard')->with('orders', $orders);
     }
@@ -25,10 +25,29 @@ class OrdersController extends Controller {
         $order->name = $name;
         $order->email = $email;
         $order->company = $company;
-        $order->station = 'LogObject 23';
+
+        $orders = Order::where('status', 'RECEIVED')->get();
+
+        if (sizeof($orders) > 10) {
+            $seconds = 0;
+            $i = 0;
+            foreach ($orders as $ord) {
+                $diff = strtotime($ord->updated_at) - strtotime($ord->created_at);
+                $seconds += $diff;
+                $i++;
+            }
+            $order->ETA = date('H:i', strtotime('now +' . (floor($seconds / $i)) . ' seconds'));
+        } else {
+            $order->ETA = date('H:i', strtotime('now +3 minutes'));
+        }
+
         $order->status = 'IN PROGRESS';
 
         $order->save();
+
+        return response()->json([
+            'order' => $order
+        ]);
     }
 
     public static function changeOrder() {
@@ -88,6 +107,11 @@ class OrdersController extends Controller {
         return response()->json([
             'message' => 'Order deleted successfully.'
         ]);
+    }
+
+    public static function dashboard() {
+        $orders = Order::where('status', 'IN PROGRESS')->orderBy('created_at', 'asc')->get();
+        return response()->json(['orders' => $orders]);
     }
 
 

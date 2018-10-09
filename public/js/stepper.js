@@ -21,7 +21,8 @@ $(document).ready(function () {
                 type: 'POST',
                 url: '/digpopcorn/public/make-order',
                 data: {number: number, name: name, email: email, company: company},
-                success: function () {
+                success: function (data) {
+                    $('#ETA').text(data.order.ETA);
                     $('#step-1').addClass('d-none');
                     $('#step-1-Button').removeClass('btn-primary');
                     $('#step-1-Button').addClass('btn-info');
