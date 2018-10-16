@@ -11,7 +11,8 @@
                             <tr class="row100 head">
                                 <th class="cell100 column1">Bestellungsnummer</th>
                                 <th class="cell100 column2">Name</th>
-                                <th class="cell100 column4">Geschätzte Zeit</th>
+                                <th class="cell100 column3">Zustand</th>
+                                <th class="cell100 column4">Prognostizierte Fertigungszeit</th>
                             </tr>
                             </thead>
                         </table>
@@ -25,7 +26,8 @@
                                     <tr class="row100 body">
                                         <td class="cell100 column1">#{{ $order->id }}</td>
                                         <td class="cell100 column2">{{ App\Helpers\CustomHelpers::initials($order->name) }}</td>
-                                        <td class="cell100 column4">{{ $order->ETA }}</td>
+                                        <td class="cell100 column3">{{ App\Helpers\CustomHelpers::germanStatus($order->status) }}</td>
+                                        <td class="cell100 column4">{{ $order->ETA }} Uhr</td>
                                     </tr>
                                 @endforeach
                             @else

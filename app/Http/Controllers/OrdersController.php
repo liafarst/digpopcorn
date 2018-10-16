@@ -8,7 +8,7 @@ use App\Order;
 class OrdersController extends Controller {
 
     public static function index() {
-        $orders = Order::where('status', 'IN PROGRESS')->get();
+        $orders = Order::orderBy('created_at', 'desc')->take(10)->orderBy('ETA', 'asc')->get();
 
         return view('pages.dashboard')->with('orders', $orders);
     }
@@ -26,7 +26,7 @@ class OrdersController extends Controller {
         $order->email = $email;
         $order->company = $company;
 
-        $orders = Order::where('status', 'RECEIVED')->get();
+        $orders = Order::where('status', 'READY TO COLLECT')->get();
 
         if (sizeof($orders) > 10) {
             $seconds = 0;
@@ -36,9 +36,9 @@ class OrdersController extends Controller {
                 $seconds += $diff;
                 $i++;
             }
-            $order->ETA = date('H:i', strtotime('now +' . (floor($seconds / $i)) . ' seconds'));
+            $order->ETA = date('H.i', strtotime('now +' . (floor($seconds / $i)) . ' seconds'));
         } else {
-            $order->ETA = date('H:i', strtotime('now +3 minutes'));
+            $order->ETA = date('H.i', strtotime('now +3 minutes'));
         }
 
         $order->status = 'IN PROGRESS';
@@ -110,7 +110,7 @@ class OrdersController extends Controller {
     }
 
     public static function dashboard() {
-        $orders = Order::where('status', 'IN PROGRESS')->orderBy('created_at', 'asc')->get();
+        $orders = Order::orderBy('created_at', 'desc')->take(10)->orderByRaw("FIELD(status, \"IN PROGRESS\", \"READY TO COLLECT\", \"RECEIVED\")")->orderBy('ETA', 'asc')->get();
         return response()->json(['orders' => $orders]);
     }
 

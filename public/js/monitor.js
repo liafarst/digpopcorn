@@ -21,24 +21,37 @@ $(document).ready(function () {
                     $('#dashboardTable tbody').append('<tr class="row100 body"><td colspan="5"><h5>Keine neue Bestellungen</h5></td></tr>');
                 } else {
                     data.orders.forEach(function (order) {
-                        $('#dashboardTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + initials(order.name) + '</td><td class="cell100 column4">' + order.ETA + '</td></tr>');
+                        $('#dashboardTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + initials(order.name) + '</td><td class="cell100 column3">' + germanStatus(order.status) + '</td><td class="cell100 column4">' + order.ETA + ' Uhr</td></tr>');
                     });
                 }
             },
             error: function () {
-                alert("Please refresh the page.");
+                // alert("Please refresh the page.");
             }
         });
     }
 
     setInterval(checkOrders, interval);
 
-    function initials(names){
+    function initials(names) {
         var initials = "";
-        names.split(" ").forEach(function (name){
+        names.split(" ").forEach(function (name) {
             initials += name.charAt(0) + ". ";
         });
         return initials;
+    }
+
+    function germanStatus(status) {
+        switch (status) {
+            case "IN PROGRESS":
+                return "Bestellt";
+            case "READY TO COLLECT":
+                return "Fertig zur Abholung";
+            case "RECEIVED":
+                return "Abgeholt";
+            default:
+                return "Unknown status.";
+        }
     }
 
 
