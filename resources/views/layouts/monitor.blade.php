@@ -29,8 +29,8 @@
 {{--@include('inc.modal')--}}
 @yield('content')
 <script type="text/javascript" src="{{ URL::asset('js/perfect-scrollbar.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('js/stepper.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/monitor.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/graphcontrol.js') }}"></script>
 <script>
     $('.js-pscroll').each(function(){
         var ps = new PerfectScrollbar(this);

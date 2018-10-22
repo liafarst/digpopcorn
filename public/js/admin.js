@@ -17,6 +17,7 @@ $(document).ready(function () {
     function readyButton() {
         var orderID = $(this).parent().parent().parent().children().first().text().split('#')[1];
         var action = "READY";
+        sendMail(orderID);
         performAction(orderID, action);
     }
 
@@ -69,9 +70,9 @@ $(document).ready(function () {
                         }
 
                         if (currentPage != "received-orders") {
-                            $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + getHours(order.created_at) + ":" + getMinutes(order.created_at) + '</td><td class="cell100 column4">' + updatedAt + '</td><td class="cell100 column5">' + buttons + '</td></tr>');
+                            $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + order.phone_number + '</td><td class="cell100 column4">' + order.company + '</td><td class="cell100 column5">' + getHours(order.created_at) + ":" + getMinutes(order.created_at) + '</td><td class="cell100 column6">' + updatedAt + '</td><td class="cell100 column7">' + buttons + '</td></tr>');
                         } else {
-                            $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + getHours(order.created_at) + ":" + getMinutes(order.created_at) + '</td><td class="cell100 column4">' + updatedAt + '</td></tr>');
+                            $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + order.phone_number + '</td><td class="cell100 column4">' + order.company + '</td><td class="cell100 column5">' + getHours(order.created_at) + ":" + getMinutes(order.created_at) + '</td><td class="cell100 column6">' + updatedAt + '</td></tr>');
                         }
                         $('#readyButton').on('click', readyButton);
                         $('#collectedButton').on('click', collectedButton);
@@ -80,12 +81,28 @@ $(document).ready(function () {
                 }
             },
             error: function () {
-                alert("Please refresh the page.");
+                // alert("Please refresh the page.");
             }
         });
     }
 
     setInterval(checkOrders, interval);
+
+    function sendMail(orderID) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/digpopcorn/public/admin-area/send-mail',
+            data: {orderID: orderID},
+            success: function () {
+                // alert("Email sent.");
+            },
+            error: function () {
+                // alert("Action could not be performed.");
+            }
+        });
+
+    }
 
 
     function performAction(orderID, action) {
@@ -96,7 +113,6 @@ $(document).ready(function () {
             data: {orderID: orderID, action: action},
             success: function (data) {
                 if (data.message) {
-                    // TODO animation
                     checkOrders();
                 } else {
                     alert("Something went wrong.");

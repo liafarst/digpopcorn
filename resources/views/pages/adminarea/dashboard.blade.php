@@ -25,12 +25,14 @@
                         <table>
                             <thead>
                             <tr class="row100 head">
-                                <th class="cell100 column1">Bestellungsnummer</th>
+                                <th class="cell100 column1">#</th>
                                 <th class="cell100 column2">Name</th>
-                                <th class="cell100 column3">Bestellt um</th>
-                                <th class="cell100 column4">Abgeholt um</th>
+                                <th class="cell100 column3">Telefonnummer</th>
+                                <th class="cell100 column4">Unternehmen</th>
+                                <th class="cell100 column5">Bestellt um</th>
+                                <th class="cell100 column6">Abgeholt um</th>
                                 @if($data['table'] != 3)
-                                    <th class="cell100 column5">Optionen</th>
+                                    <th class="cell100 column7">Optionen</th>
                                 @endif
                             </tr>
                             </thead>
@@ -45,8 +47,10 @@
                                     <tr class="row100 body">
                                         <td class="cell100 column1">#{{ $order->id }}</td>
                                         <td class="cell100 column2">{{ $order->name }}</td>
-                                        <td class="cell100 column3">{{ Carbon\Carbon::parse($order->created_at)->format('H:i') }}</td>
-                                        <td class="cell100 column4">
+                                        <td class="cell100 column3">{{ $order->phone_number }}</td>
+                                        <td class="cell100 column4">{{ $order->company }}</td>
+                                        <td class="cell100 column5">{{ Carbon\Carbon::parse($order->created_at)->format('H:i') }}</td>
+                                        <td class="cell100 column6">
                                             @if($data['table'] == 3)
                                                 {{ Carbon\Carbon::parse($order->updated_at)->format('H:i') }}
                                             @else
@@ -54,7 +58,7 @@
                                             @endif
                                         </td>
                                         @if($data['table'] != 3)
-                                            <td class="cell100 column5">
+                                            <td class="cell100 column7">
                                                 @if($data['table'] == 1)
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <button id="readyButton" class="btn btn-success">Fertig</button>

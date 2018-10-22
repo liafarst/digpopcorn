@@ -23,7 +23,7 @@ body, html {
     height: 100%;
     font-family: sans-serif;
     max-width: 100%;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -31,6 +31,7 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 input[type="number"] {
     -moz-appearance: textfield;
 }
@@ -526,4 +527,50 @@ th, td {
 
 .table100.ver5 .ps__rail-y .ps__thumb-y::before {
     background-color: #cccccc;
+}
+
+.progress-line {
+    background-color: #0067a4;
+    border: 0 none;
+    height: 3px;
+    margin: 0;
+    padding: 0;
+}
+
+.bg-fir {
+    background-color: #0067a4;
+    color: #fff;
+}
+
+.timeSpan {
+    z-index: 10;
+    position: absolute;
+    top: -15px;
+    border-radius: 50%;
+    /* remove if you don't care about IE8 */
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    background-color: #0067a4;
+    color: #fff;
+    text-align: center;
+    font: 20px Arial, sans-serif;
+}
+
+.timeSpanNumberOver{
+    z-index: 10;
+    position: absolute;
+    top: -45px;
+}
+
+.timeSpanNumberUnder{
+    z-index: 10;
+    position: absolute;
+    top: 25px;
+}
+
+#progress-container {
+    position: relative;
+    margin-top:35px;
+    margin-bottom:55px;
 }

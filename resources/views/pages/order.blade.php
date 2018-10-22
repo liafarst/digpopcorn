@@ -6,7 +6,13 @@
 
     <div class="container my-5" style="max-width:600px;">
 
-        <!-- First Step -->
+        @if(!empty($message))
+            <div class="alert alert-success" role="alert">
+                {{ $message }}
+            </div>
+    @endif
+
+    <!-- First Step -->
         <div class="row" id="step-1">
             <div class="col-md-12">
                 <h3 class="font-weight-bold pl-0 my-4"><strong>Bestellung</strong></h3>
@@ -49,7 +55,8 @@
                             <h3 class="dropdown-header">Andere</h3>
                             <div class="container">
                                 <div class="row">
-                                    <input id="other" class="my-2 form-control" type="text" placeholder="Ländercode" style="width:50px">
+                                    <input id="other" class="my-2 form-control" type="text" placeholder="Ländercode"
+                                           style="width:50px">
                                 </div>
                             </div>
                         </div>
@@ -73,7 +80,9 @@
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">Ich stimme zu, dass meine persönlichen Daten verarbeitet werden</span>
                 </label>
-                <button id="makeOffer" class="btn btn-primary btn-rounded float-right my-3" type="button">Popcorn bestellen</button>
+                <button id="makeOffer" class="btn btn-primary btn-rounded float-right my-3" type="button">Popcorn
+                    bestellen
+                </button>
             </div>
         </div>
 
@@ -83,13 +92,6 @@
                 <h4 class="font-weight-bold pl-0 my-4"><strong>Abholung</strong></h4>
                 <h1>Prognostizierte Fertigungszeit: <span id="ETA"></span></h1>
                 <img src="{{ URL::asset('images/map.png') }}" alt="" style="width:400px">
-            </div>
-        </div>
-
-        <!-- Third Step -->
-        <div class="row d-none" id="step-3">
-            <div class="col-md-12">
-                <h3 class="font-weight-bold pl-0 my-4"><strong>Feedback</strong></h3>
             </div>
         </div>
 

@@ -14,6 +14,12 @@ class CustomHelpers {
         return $result;
     }
 
+    public static function timeToMinutes($time) {
+        $segments = explode(".", $time);
+        $minutes = $segments[0] * 60 + $segments[1];
+        return $minutes;
+    }
+
     public static function germanStatus($status) {
         switch($status){
             case "IN PROGRESS":

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderReady;
 use Illuminate\Http\Request;
 use App\Order;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller {
 
@@ -11,6 +14,18 @@ class OrdersController extends Controller {
         $orders = Order::orderBy('created_at', 'desc')->take(10)->orderBy('ETA', 'asc')->get();
 
         return view('pages.dashboard')->with('orders', $orders);
+    }
+
+    public static function stats() {
+        return view('pages.stats');
+    }
+
+    public static function getStats() {
+        $orders = Order::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->take(20)->get();
+
+        return response()->json([
+            'orders' => $orders
+        ]);
     }
 
     public static function makeOrder() {
@@ -41,7 +56,10 @@ class OrdersController extends Controller {
             $order->ETA = date('H.i', strtotime('now +3 minutes'));
         }
 
+        $order->ordered_at = date('H.i', strtotime('now'));
+
         $order->status = 'IN PROGRESS';
+        $order->feedback = 'empty';
 
         $order->save();
 
@@ -59,6 +77,7 @@ class OrdersController extends Controller {
             switch ($action) {
                 case "READY":
                     $order->status = "READY TO COLLECT";
+                    $order->ready_at = date('H.i', strtotime('now'));
                     $order->save();
                     return response()->json([
                         'message' => 'Status changed to READY TO COLLECT.'
@@ -66,6 +85,7 @@ class OrdersController extends Controller {
                     break;
                 case "COLLECTED":
                     $order->status = "RECEIVED";
+                    $order->collected_at = date('H.i', strtotime('now'));
                     $order->save();
                     return response()->json([
                         'message' => 'Status changed to RECEIVED.'
@@ -114,5 +134,56 @@ class OrdersController extends Controller {
         return response()->json(['orders' => $orders]);
     }
 
+    public function sendMail() {
+        $orderID = request()->input('orderID');
+
+        $order = Order::find($orderID);
+        $email = $order->email;
+        $ETA = $order->ETA;
+
+        Mail::to($email)->send(new OrderReady($ETA, $orderID));
+    }
+
+    public function showFeedback(Request $request, $orderID) {
+        if (!$orderID) {
+            return view('pages.feedback')->with('order', null);
+        }
+
+        $order = Order::find($orderID);
+
+        if (!$order) {
+            return view('pages.feedback')->with('order', null);
+        }
+
+        if ($order->status != 'RECEIVED') {
+            return view('pages.feedback')->with('order', null);
+        }
+
+        if ($order->feedback != 'empty') {
+            return view('pages.feedback')->with('order', null);
+        }
+
+        return view('pages.feedback')->with('order', $order);
+    }
+
+    public function sendFeedback() {
+        $orderID = request()->input('orderID');
+        $feedback = request()->input('feedback');
+
+        $order = Order::find($orderID);
+        if (!$order) {
+            return view('errors.main');
+        }
+
+        if ($order->feedback != 'empty') {
+            return view('errors.main');
+        }
+
+        $order->feedback = $feedback;
+        $order->save();
+
+        return view('pages.order')->with('message', 'Ihre Rückmeldung wurde erfolgreich gesendet.');
+
+    }
 
 }

@@ -19,8 +19,12 @@ class CreateOrdersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('company');
+            $table->string('ordered_at');
             $table->string('ETA');
-            $table->enum('status', ['ORDERED', 'IN PROGRESS', 'READY TO COLLECT', 'RECEIVED']);
+            $table->string('ready_at')->default('0');
+            $table->string('collected_at')->default('0');
+            $table->text('feedback');
+            $table->enum('status', ['IN PROGRESS', 'READY TO COLLECT', 'RECEIVED']);
             $table->timestamps();
         });
     }

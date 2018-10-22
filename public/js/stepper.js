@@ -1,6 +1,19 @@
 $(document).ready(function () {
 
-    $('#makeOffer').on('click', function (){
+    var orderedMinutes = $('#timeOrdered').attr('time');
+    var ETAMinutes = $('#timeETA').attr('time');
+    var readyMinutes = $('#timeReady').attr('time');
+    var collectedMinutes = $('#timeCollected').attr('time');
+
+    var totalMinutes = collectedMinutes - orderedMinutes;
+
+    if(totalMinutes == 0){
+        totalMinutes = 1;
+    }
+
+    adjustSpans(ETAMinutes, readyMinutes, totalMinutes);
+
+    $('#makeOffer').on('click', function () {
         var countryCode = $('#countryCode').text();
         var phoneNumber = $('#phoneNumber').val();
         var name = $('#name').val();
@@ -8,9 +21,9 @@ $(document).ready(function () {
         var company = $('#company').val();
         var processData = $('#processData').is(":checked");
 
-        if(!countryCode || !phoneNumber || !name || !email || !company || !processData){
+        if (!countryCode || !phoneNumber || !name || !email || !company || !processData) {
             $('#errorAlert').removeClass('d-none');
-        }else{
+        } else {
             var number = countryCode + "" + phoneNumber;
             $.ajaxSetup({
                 headers: {
@@ -45,4 +58,45 @@ $(document).ready(function () {
         $('#countryCode').text($(this).val());
     });
 
+    $(window).resize(function () {
+        adjustSpans(ETAMinutes, readyMinutes, totalMinutes);
+    });
+
 });
+
+function adjustSpans(ETAMinutes, readyMinutes, totalMinutes) {
+    var ETALeft = ETAMinutes * $('#progress-container').width() / totalMinutes;
+    var readyLeft = readyMinutes * $('#progress-container').width() / totalMinutes;
+
+    if (ETALeft <= 80) {
+        ETALeft += 80;
+    }
+
+    if (readyLeft <= 80) {
+        readyLeft += 80;
+    }
+
+    if (ETALeft >= $('#progress-container').width()) {
+        ETALeft -= 120;
+    }
+
+    if (readyLeft >= $('#progress-container').width()) {
+        readyLeft -= 120;
+    }
+
+    if (Math.abs(ETALeft - readyLeft) < 80) {
+        if (ETALeft > readyLeft) {
+            ETALeft += 40;
+            readyLeft -= 40;
+        } else {
+            ETALeft -= 40;
+            readyLeft += 40;
+        }
+    }
+
+    $('#timeETA').css("left", ETALeft + 'px');
+    $('#timeReady').css("left", readyLeft + 'px');
+
+    $('#timeETANumber').css("left", ETALeft - 10 + 'px');
+    $('#timeReadyNumber').css("left", readyLeft - 10 + 'px');
+}
