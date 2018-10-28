@@ -8,11 +8,11 @@ $(document).ready(function () {
         }
     });
 
-    $('#readyButton').on('click', readyButton);
+    $('.readyButton').on('click', readyButton);
 
-    $('#collectedButton').on('click', collectedButton);
+    $('.collectedButton').on('click', collectedButton);
 
-    $('#deleteButton').on('click', deleteButton);
+    $('.deleteButton').on('click', deleteButton);
 
     function readyButton() {
         var orderID = $(this).parent().parent().parent().children().first().text().split('#')[1];
@@ -50,10 +50,10 @@ $(document).ready(function () {
                     // buttons
                     switch (currentPage) {
                         case "new-orders":
-                            var buttons = '<div class="btn-group" role="group" aria-label="Basic example"><button id="readyButton" class="btn btn-success">Fertig</button><button id="deleteButton" class="btn btn-danger">Löschen</button></div>';
+                            var buttons = '<div class="btn-group" role="group" aria-label="Basic example"><button class="btn btn-success readyButton">Fertig</button><button class="btn btn-danger deleteButton">Löschen</button></div>';
                             break;
                         case "ready-orders":
-                            var buttons = '<div class="btn-group" role="group" aria-label="Basic example"><button id="collectedButton" class="btn btn-success">Abgeholt</button><button id="deleteButton" class="btn btn-danger">Löschen</button></div>';
+                            var buttons = '<div class="btn-group" role="group" aria-label="Basic example"><button class="btn btn-success collectedButton">Abgeholt</button><button class="btn btn-danger deleteButton">Löschen</button></div>';
                             break;
                         case "received-orders":
                             var buttons = "";
@@ -74,9 +74,9 @@ $(document).ready(function () {
                         } else {
                             $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + order.phone_number + '</td><td class="cell100 column4">' + order.company + '</td><td class="cell100 column5">' + getHours(order.ordered_at) + ":" + getMinutes(order.ordered_at) + ' Uhr</td><td class="cell100 column6">' + collectedAt + '</td></tr>');
                         }
-                        $('#readyButton').on('click', readyButton);
-                        $('#collectedButton').on('click', collectedButton);
-                        $('#deleteButton').on('click', deleteButton);
+                        $('.readyButton').on('click', readyButton);
+                        $('.collectedButton').on('click', collectedButton);
+                        $('.deleteButton').on('click', deleteButton);
                     });
                 }
             },

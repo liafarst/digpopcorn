@@ -12,7 +12,7 @@ use Faker\Provider\DateTime;
 class OrdersController extends Controller {
 
     public static function index() {
-        $orders = Order::orderBy('created_at', 'desc')->take(10)->orderBy('ETA', 'asc')->get();
+        $orders = Order::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->take(10)->orderBy('ETA', 'asc')->get();
 
         return view('pages.dashboard')->with('orders', $orders);
     }
@@ -27,37 +27,34 @@ class OrdersController extends Controller {
 
         switch ($canvasNumber) {
             case '1':
-//                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
-                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
+                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
+//                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
 
                 return response()->json([
                     'orders' => $orders
                 ]);
-                break;
             case '2':
-//                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
-                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(16)->get();
+                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(16)->get();
+//                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(16)->get();
 
                 return response()->json([
                     'orders' => $orders
                 ]);
-                break;
             case '3':
-//                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
-                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(16)->get();
+                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(16)->get();
+//                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(16)->get();
 
                 return response()->json([
                     'orders' => $orders
                 ]);
-                break;
             case '4':
                 // TODO
-                $orders = Order::whereRaw('created_at >= now() - interval 180 minute')->orderBy('created_at', 'asc')->get();
+                $orders = Order::whereDate('created_at', Carbon::today())->whereRaw('created_at >= now() - interval 180 minute')->orderBy('created_at', 'asc')->get();
+//                $orders = Order::whereRaw('created_at >= now() - interval 180 minute')->orderBy('created_at', 'asc')->get();
                 return response()->json([
                     'orders' => $orders,
                     'now' => date("H:i"),
                 ]);
-                break;
         }
     }
 
@@ -74,7 +71,7 @@ class OrdersController extends Controller {
         $order->email = $email;
         $order->company = $company;
 
-        $orders = Order::where('status', 'READY TO COLLECT')->get();
+        $orders = Order::where('status', 'RECEIVED')->get();
 
         if (sizeof($orders) > 10) {
             $seconds = 0;
@@ -141,29 +138,21 @@ class OrdersController extends Controller {
 
         switch ($currentPage) {
             case "new-orders":
-                $orders = Order::where('status', 'IN PROGRESS')->orderBy('created_at', 'desc')->get();
+                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'IN PROGRESS')->orderBy('created_at', 'desc')->get();
                 return response()->json(['orders' => $orders]);
-                break;
             case "ready-orders":
-                $orders = Order::where('status', 'READY TO COLLECT')->orderBy('created_at', 'desc')->get();
+                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'READY TO COLLECT')->orderBy('created_at', 'desc')->get();
                 return response()->json(['orders' => $orders]);
-                break;
             case "received-orders":
-                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->get();
+                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->get();
                 return response()->json(['orders' => $orders]);
-                break;
             default:
                 break;
         }
-
-
-        return response()->json([
-            'message' => 'Order deleted successfully.'
-        ]);
     }
 
     public static function dashboard() {
-        $orders = Order::orderBy('created_at', 'desc')->take(10)->orderByRaw("FIELD(status, \"IN PROGRESS\", \"READY TO COLLECT\", \"RECEIVED\")")->orderBy('ETA', 'asc')->get();
+        $orders = Order::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->take(10)->orderByRaw("FIELD(status, \"IN PROGRESS\", \"READY TO COLLECT\", \"RECEIVED\")")->orderBy('ETA', 'asc')->get();
         return response()->json(['orders' => $orders]);
     }
 

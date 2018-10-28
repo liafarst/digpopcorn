@@ -49,7 +49,9 @@
                                         <td class="cell100 column2">{{ $order->name }}</td>
                                         <td class="cell100 column3">{{ $order->phone_number }}</td>
                                         <td class="cell100 column4">{{ $order->company }}</td>
-                                        <td class="cell100 column5">{{ Carbon\Carbon::parse($order->created_at)->format('H:i') }} Uhr</td>
+                                        <td class="cell100 column5">{{ Carbon\Carbon::parse($order->created_at)->format('H:i') }}
+                                            Uhr
+                                        </td>
                                         <td class="cell100 column6">
                                             @if($data['table'] == 3)
                                                 {{ Carbon\Carbon::parse($order->updated_at)->format('H:i') }} Uhr
@@ -61,16 +63,16 @@
                                             <td class="cell100 column7">
                                                 @if($data['table'] == 1)
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <button id="readyButton" class="btn btn-success">Fertig</button>
-                                                        <button id="deleteButton" class="btn btn-danger">Löschen
+                                                        <button class="btn btn-success readyButton">Fertig</button>
+                                                        <button class="btn btn-danger deleteButton">Löschen
                                                         </button>
                                                     </div>
                                                 @endif
                                                 @if($data['table'] == 2)
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <button id="collectedButton" class="btn btn-success">Abgeholt
+                                                        <button class="btn btn-success collectedButton">Abgeholt
                                                         </button>
-                                                        <button id="deleteButton" class="btn btn-danger">Löschen
+                                                        <button class="btn btn-danger deleteButton">Löschen
                                                         </button>
                                                     </div>
                                                 @endif
