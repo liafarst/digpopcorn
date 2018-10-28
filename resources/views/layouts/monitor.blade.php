@@ -27,15 +27,18 @@
 </head>
 <body>
 {{--@include('inc.modal')--}}
+<div class="text-center mt-2" style="width:100%">
+    <img src="{{ URL::asset('images/logo.png') }}" style="width:300px;">
+</div>
 @yield('content')
 <script type="text/javascript" src="{{ URL::asset('js/perfect-scrollbar.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/monitor.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/graphcontrol.js') }}"></script>
 <script>
-    $('.js-pscroll').each(function(){
+    $('.js-pscroll').each(function () {
         var ps = new PerfectScrollbar(this);
 
-        $(window).on('resize', function(){
+        $(window).on('resize', function () {
             ps.update();
         })
     });

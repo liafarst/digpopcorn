@@ -37,11 +37,12 @@ $(document).ready(function () {
                 success: function (data) {
                     $('#ETA').text(data.order.ETA);
                     $('#step-1').addClass('d-none');
-                    $('#step-1-Button').removeClass('btn-primary');
+                    $('#step-1-Button').removeClass('bg-fir');
                     $('#step-1-Button').addClass('btn-info');
                     $('#step-2').removeClass('d-none');
                     $('#step-2-Button').removeClass('btn-info');
-                    $('#step-2-Button').addClass('btn-primary');
+                    $('#step-2-Button').addClass('bg-fir');
+                    $('#stepperTitle').html('<strong>Information zur Abholung</strong>');
                 },
                 error: function () {
                     alert("Ihre Bestellung wurde nicht registriert. Bitte versuchen Sie nochmal.");

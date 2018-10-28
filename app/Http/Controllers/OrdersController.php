@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Faker\Provider\DateTime;
 
 class OrdersController extends Controller {
 
@@ -21,11 +22,43 @@ class OrdersController extends Controller {
     }
 
     public static function getStats() {
-        $orders = Order::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->take(20)->get();
 
-        return response()->json([
-            'orders' => $orders
-        ]);
+        $canvasNumber = request()->input('canvasNumber');
+
+        switch ($canvasNumber) {
+            case '1':
+//                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
+                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
+
+                return response()->json([
+                    'orders' => $orders
+                ]);
+                break;
+            case '2':
+//                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
+                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(16)->get();
+
+                return response()->json([
+                    'orders' => $orders
+                ]);
+                break;
+            case '3':
+//                $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(20)->get();
+                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(16)->get();
+
+                return response()->json([
+                    'orders' => $orders
+                ]);
+                break;
+            case '4':
+                // TODO
+                $orders = Order::whereRaw('created_at >= now() - interval 180 minute')->orderBy('created_at', 'asc')->get();
+                return response()->json([
+                    'orders' => $orders,
+                    'now' => date("H:i"),
+                ]);
+                break;
+        }
     }
 
     public static function makeOrder() {
@@ -51,12 +84,12 @@ class OrdersController extends Controller {
                 $seconds += $diff;
                 $i++;
             }
-            $order->ETA = date('H.i', strtotime('now +' . (floor($seconds / $i)) . ' seconds'));
+            $order->ETA = date('H:i', strtotime('now +' . (floor($seconds / $i)) . ' seconds'));
         } else {
-            $order->ETA = date('H.i', strtotime('now +3 minutes'));
+            $order->ETA = date('H:i', strtotime('now +3 minutes'));
         }
 
-        $order->ordered_at = date('H.i', strtotime('now'));
+        $order->ordered_at = date('H:i', strtotime('now'));
 
         $order->status = 'IN PROGRESS';
         $order->feedback = 'empty';
@@ -77,7 +110,7 @@ class OrdersController extends Controller {
             switch ($action) {
                 case "READY":
                     $order->status = "READY TO COLLECT";
-                    $order->ready_at = date('H.i', strtotime('now'));
+                    $order->ready_at = date('H:i', strtotime('now'));
                     $order->save();
                     return response()->json([
                         'message' => 'Status changed to READY TO COLLECT.'
@@ -85,7 +118,7 @@ class OrdersController extends Controller {
                     break;
                 case "COLLECTED":
                     $order->status = "RECEIVED";
-                    $order->collected_at = date('H.i', strtotime('now'));
+                    $order->collected_at = date('H:i', strtotime('now'));
                     $order->save();
                     return response()->json([
                         'message' => 'Status changed to RECEIVED.'
@@ -108,15 +141,15 @@ class OrdersController extends Controller {
 
         switch ($currentPage) {
             case "new-orders":
-                $orders = Order::where('status', 'IN PROGRESS')->orderBy('created_at', 'asc')->get();
+                $orders = Order::where('status', 'IN PROGRESS')->orderBy('created_at', 'desc')->get();
                 return response()->json(['orders' => $orders]);
                 break;
             case "ready-orders":
-                $orders = Order::where('status', 'READY TO COLLECT')->orderBy('created_at', 'asc')->get();
+                $orders = Order::where('status', 'READY TO COLLECT')->orderBy('created_at', 'desc')->get();
                 return response()->json(['orders' => $orders]);
                 break;
             case "received-orders":
-                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'asc')->get();
+                $orders = Order::where('status', 'RECEIVED')->orderBy('created_at', 'desc')->get();
                 return response()->json(['orders' => $orders]);
                 break;
             default:
@@ -141,7 +174,7 @@ class OrdersController extends Controller {
         $email = $order->email;
         $ETA = $order->ETA;
 
-        Mail::to($email)->send(new OrderReady($ETA, $orderID));
+        Mail::to($email)->subject('Smartcorn: Ihre Popcornbestllung liegt nun abholbereit am Stand des FIR')->send(new OrderReady($ETA, $orderID));
     }
 
     public function showFeedback(Request $request, $orderID) {

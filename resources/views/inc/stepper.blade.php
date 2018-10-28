@@ -2,13 +2,13 @@
 <div class="card">
     <div class="card-body mb-4">
 
-        <h2 class="text-center font-weight-bold pt-4 pb-5"><strong>Popcornbestellung</strong></h2>
+        <h2 id="stepperTitle" class="text-center font-weight-bold pt-4 pb-5"><strong>Popcornbestellung</strong></h2>
 
         <!-- Stepper -->
         <div class="steps-form">
             <div class="steps-row setup-panel">
                 <div class="steps-step">
-                    <button id="step-1-Button" href="#step-1" type="button" class="btn btn-primary btn-circle">1</button>
+                    <button id="step-1-Button" href="#step-1" type="button" class="btn bg-fir btn-circle">1</button>
                     <p>Bestellung</p>
                 </div>
                 <div class="steps-step">

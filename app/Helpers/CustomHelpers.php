@@ -15,7 +15,7 @@ class CustomHelpers {
     }
 
     public static function timeToMinutes($time) {
-        $segments = explode(".", $time);
+        $segments = explode(":", $time);
         $minutes = $segments[0] * 60 + $segments[1];
         return $minutes;
     }

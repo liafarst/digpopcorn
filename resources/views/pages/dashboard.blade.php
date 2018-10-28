@@ -12,7 +12,7 @@
                                 <th class="cell100 column1">Bestellungsnummer</th>
                                 <th class="cell100 column2">Name</th>
                                 <th class="cell100 column3">Zustand</th>
-                                <th class="cell100 column4">Prognostizierte Fertigungszeit</th>
+                                <th class="cell100 column4">Prognostizierte Fertigstellungszeit</th>
                             </tr>
                             </thead>
                         </table>

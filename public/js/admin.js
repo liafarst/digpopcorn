@@ -63,16 +63,16 @@ $(document).ready(function () {
                     // change table
                     data.orders.forEach(function (order) {
 
-                        var updatedAt = "-";
+                        var collectedAt = "-";
                         if (currentPage == "received-orders") {
-                            updatedAt = order.updated_at;
-                            updatedAt = getHours(updatedAt) + ":" + getMinutes(updatedAt);
+                            collectedAt = order.collected_at;
+                            collectedAt = getHours(collectedAt) + ":" + getMinutes(collectedAt) + ' Uhr';
                         }
 
                         if (currentPage != "received-orders") {
-                            $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + order.phone_number + '</td><td class="cell100 column4">' + order.company + '</td><td class="cell100 column5">' + getHours(order.created_at) + ":" + getMinutes(order.created_at) + '</td><td class="cell100 column6">' + updatedAt + '</td><td class="cell100 column7">' + buttons + '</td></tr>');
+                            $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + order.phone_number + '</td><td class="cell100 column4">' + order.company + '</td><td class="cell100 column5">' + getHours(order.ordered_at) + ":" + getMinutes(order.ordered_at) + ' Uhr</td><td class="cell100 column6">' + collectedAt + '</td><td class="cell100 column7">' + buttons + '</td></tr>');
                         } else {
-                            $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + order.phone_number + '</td><td class="cell100 column4">' + order.company + '</td><td class="cell100 column5">' + getHours(order.created_at) + ":" + getMinutes(order.created_at) + '</td><td class="cell100 column6">' + updatedAt + '</td></tr>');
+                            $('#ordersTable tbody').append('<tr class="row100 body"><td class="cell100 column1">#' + order.id + '</td><td class="cell100 column2">' + order.name + '</td><td class="cell100 column3">' + order.phone_number + '</td><td class="cell100 column4">' + order.company + '</td><td class="cell100 column5">' + getHours(order.ordered_at) + ":" + getMinutes(order.ordered_at) + ' Uhr</td><td class="cell100 column6">' + collectedAt + '</td></tr>');
                         }
                         $('#readyButton').on('click', readyButton);
                         $('#collectedButton').on('click', collectedButton);
@@ -125,11 +125,11 @@ $(document).ready(function () {
     }
 
     function getHours(timestamp) {
-        return timestamp.split(" ")[1].split(":")[0];
+        return timestamp.split(":")[0];
     }
 
     function getMinutes(timestamp) {
-        return timestamp.split(" ")[1].split(":")[1];
+        return timestamp.split(":")[1];
     }
 
 

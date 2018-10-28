@@ -19,11 +19,12 @@
                 {!! csrf_field() !!}
                 <input type="hidden" name="orderID" value="{{ $order->id }}">
                 <div class="card rounded-0">
-                    <div class="card-header p-0">
-                        <div class="bg-fir text-white text-left py-2 pl-5">
+                    <div class="card-header bg-fir">
+                        <h3 class="m-1">Übersicht über Ihre persönlichen Bestell- und Abholzeiten</h3>
+                        <div class="text-white text-left py-2 pl-5">
                             <p class="m-0">1. Bestellt um {{ $order->ordered_at }} Uhr</p>
-                            <p class="m-0">2. Geschätzte Fertigungszeit {{ $order->ETA }} Uhr</p>
-                            <p class="m-0">3. Tatsächliche Fertigungszeit {{ $order->ready_at }} Uhr</p>
+                            <p class="m-0">2. Prognostizierte Fertigstellungszeit {{ $order->ETA }} Uhr</p>
+                            <p class="m-0">3. Tatsächliche Fertigstellungszeit {{ $order->ready_at }} Uhr</p>
                             <p class="m-0">4. Abgeholt um {{ $order->collected_at }} Uhr</p>
                         </div>
                     </div>
@@ -60,4 +61,14 @@
             <h3>Sie haben eine falsche Bestellungsnummer eingegeben.</h3>
         @endif
     </div>
+@endsection
+
+@section('includes')
+    <script>
+        $('#step-1-Button').removeClass('bg-fir');
+        $('#step-1-Button').addClass('btn-info');
+        $('#step-2-Button').removeClass('bg-fir');
+        $('#step-3-Button').addClass('bg-fir');
+        $('#stepperTitle').html('<strong>Feedback</strong>');
+    </script>
 @endsection

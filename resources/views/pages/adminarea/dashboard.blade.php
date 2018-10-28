@@ -49,10 +49,10 @@
                                         <td class="cell100 column2">{{ $order->name }}</td>
                                         <td class="cell100 column3">{{ $order->phone_number }}</td>
                                         <td class="cell100 column4">{{ $order->company }}</td>
-                                        <td class="cell100 column5">{{ Carbon\Carbon::parse($order->created_at)->format('H:i') }}</td>
+                                        <td class="cell100 column5">{{ Carbon\Carbon::parse($order->created_at)->format('H:i') }} Uhr</td>
                                         <td class="cell100 column6">
                                             @if($data['table'] == 3)
-                                                {{ Carbon\Carbon::parse($order->updated_at)->format('H:i') }}
+                                                {{ Carbon\Carbon::parse($order->updated_at)->format('H:i') }} Uhr
                                             @else
                                                 -
                                             @endif

@@ -30,6 +30,7 @@
 @include('inc.navbar-main')
 {{--@include('inc.modal')--}}
 @yield('content')
+@yield('includes')
 <script type="text/javascript" src="{{ URL::asset('js/perfect-scrollbar.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/stepper.js') }}"></script>
 <script>

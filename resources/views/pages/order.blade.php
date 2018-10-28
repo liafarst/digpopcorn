@@ -13,9 +13,11 @@
     @endif
 
     <!-- First Step -->
-        <div class="row" id="step-1">
+        <div class="row orderStep" id="step-1">
             <div class="col-md-12">
-                <h3 class="font-weight-bold pl-0 my-4"><strong>Bestellung</strong></h3>
+                <p class="font-weight-bold">Herzlich wilkommen zur Bestellung für Popcorn der smarten Popcornmaschine.
+                    Bitte geben Sie zur Bestellung des kostenlosen Popcorns am Messestand des FIR folgende Informationen
+                    an:</p>
                 <div id="errorAlert" class="alert alert-danger d-none" role="alert">
                     Bitte fühlen Sie alle Felder.
                 </div>
@@ -89,9 +91,9 @@
         <!-- Second Step -->
         <div class="row d-none" id="step-2">
             <div class="col-md-12">
-                <h4 class="font-weight-bold pl-0 my-4"><strong>Abholung</strong></h4>
-                <h1>Prognostizierte Fertigungszeit: <span id="ETA"></span></h1>
-                <img src="{{ URL::asset('images/map.png') }}" alt="" style="width:400px">
+                <h2 class="font-weight-bold pl-0 my-4 font-fir">Abholung</h2>
+                <h4 class="font-fir">Prognostizierte Fertigstellungszeit: <span id="ETA"></span> Uhr</h4>
+                <img src="{{ URL::asset('images/map.png') }}" alt="" style="width:350px">
             </div>
         </div>
 
