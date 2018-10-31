@@ -49,7 +49,7 @@ class OrdersController extends Controller {
                 ]);
             case '4':
                 // TODO
-                $orders = Order::whereDate('created_at', Carbon::today())->whereRaw('created_at >= now() - interval 180 minute')->orderBy('created_at', 'asc')->get();
+                $orders = Order::whereDate('created_at', Carbon::today())->whereRaw('created_at >= now() - interval 600 minute')->orderBy('created_at', 'asc')->get();
 //                $orders = Order::whereRaw('created_at >= now() - interval 180 minute')->orderBy('created_at', 'asc')->get();
                 return response()->json([
                     'orders' => $orders,

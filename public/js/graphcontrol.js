@@ -2,11 +2,11 @@ var h;
 
 var scaleX1 = 80; // 80 pixels for 1 order
 var scaleY1 = 20; // 20 pixels for 1 minute
-var scaleX2 = 24; // 80 pixels for 1 order
-var scaleY2 = 14; // 20 pixels for 1 minute
-var scaleX3 = 24; // 80 pixels for 1 order
-var scaleY3 = 14; // 20 pixels for 1 minute
-var scaleX4 = 75; // 80 pixels for 10 minutes
+var scaleX2 = 24; // 24 pixels for 1 order
+var scaleY2 = 14; // 14 pixels for 1 minute
+var scaleX3 = 24; // 24 pixels for 1 order
+var scaleY3 = 14; // 14 pixels for 1 minute
+var scaleX4 = 28; // 28 pixels for 30 minutes
 var scaleY4 = 23; // 23 pixels for 1 order
 
 $(document).ready(function () {
@@ -242,10 +242,6 @@ $(document).ready(function () {
                     }
                     break;
                 case '4':
-                    // numbers on x
-                    for (var i = 2 * scaleX4; i <= scaleX4 * 21; i += scaleX4) {
-                        ctx.fillText(i / scaleX4 - 1, i + 10, 380);
-                    }
                     ctx.textAlign = "right";
                     ctx.font = "bold 14px Arial";
                     // numbers on y
@@ -444,15 +440,17 @@ $(document).ready(function () {
                 // ctx.fillStyle = "rgb(205,0,103)";
 
                 var idx = 0;
-                for (var i = now - 60; i <= now; i += 10) {
+                for (var i = now - 480; i <= now; i += 30) {
                     var counter = 0;
                     data.orders.forEach(function (order) {
-                        if (timeToMinutes(order.ordered_at) > i && timeToMinutes(order.ordered_at) < i + 10) {
+                        if (timeToMinutes(order.ordered_at) > i && timeToMinutes(order.ordered_at) < i + 30) {
                             counter++;
                         }
                     });
                     // X
-                    ctx.fillText(minutesToTime(i), idx * scaleX4 + 80, 330);
+                    if (idx % 4 == 0) {
+                        ctx.fillText(minutesToTime(i), idx * scaleX4 + 80, 330);
+                    }
 
                     ctx.lineTo(idx * scaleX4 + 100, h - counter * scaleY4);
                     ctx.moveTo(idx * scaleX4 + 100, h - counter * scaleY4);
