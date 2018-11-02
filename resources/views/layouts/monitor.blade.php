@@ -31,6 +31,7 @@
     <img src="{{ URL::asset('images/logo.png') }}" style="width:300px;">
 </div>
 @yield('content')
+@yield('includes')
 <script type="text/javascript" src="{{ URL::asset('js/perfect-scrollbar.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/monitor.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/graphcontrol.js') }}"></script>

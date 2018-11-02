@@ -13,7 +13,7 @@
     @endif
 
     <!-- First Step -->
-        <div class="row orderStep" id="step-1">
+        <div class="row" id="step-1">
             <div class="col-md-12">
                 <p class="font-weight-bold">Herzlich wilkommen zur Bestellung für Popcorn der smarten Popcornmaschine.
                     Bitte geben Sie zur Bestellung des kostenlosen Popcorns am Messestand des FIR folgende Informationen
@@ -30,24 +30,24 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item country-code" id="Germany" value="+49" style="cursor:pointer">
                                 <img src="{{ URL::asset('images/Germany.jpg') }}" alt="" style="width:30px">
-                                +49 Germany
+                                +49 Deutschland
                             </a>
                             <a class="dropdown-item country-code" id="UK" value="+44" style="cursor:pointer">
                                 <img src="{{ URL::asset('images/United Kingdom.png') }}" alt="" style="width:30px">
-                                +44 United Kingdom
+                                +44 England
                             </a>
                             <a class="dropdown-item country-code" id="France" value="+33" style="cursor:pointer">
                                 <img src="{{ URL::asset('images/France.png') }}" alt="" style="width:30px">
-                                +33 France
+                                +33 Frankreich
                             </a>
                             <a class="dropdown-item country-code" id="Belgium" value="+32" style="cursor:pointer">
                                 <img src="{{ URL::asset('images/Belgium.png') }}" alt="" style="width:30px">
-                                +32 Belgium
+                                +32 Belgien
                             </a>
                             <a class="dropdown-item country-code" id="Netherlands" value="+31"
                                style="cursor:pointer">
                                 <img src="{{ URL::asset('images/Netherlands.png') }}" alt="" style="width:30px">
-                                +31 Netherlands
+                                +31 Niderlande
                             </a>
                             <a class="dropdown-item country-code" id="USA" value="+1" style="cursor:pointer">
                                 <img src="{{ URL::asset('images/USA.png') }}" alt="" style="width:30px">
@@ -91,9 +91,9 @@
         <!-- Second Step -->
         <div class="row d-none" id="step-2">
             <div class="col-md-12">
-                <h2 class="font-weight-bold pl-0 my-4 font-fir">Abholung</h2>
-                <h4 class="font-fir">Prognostizierte Fertigstellungszeit: <span id="ETA"></span> Uhr</h4>
-                <img src="{{ URL::asset('images/map.png') }}" alt="" style="width:350px">
+                <h4 class="font-fir">Prognostizierte Fertigstellungszeit:</h4>
+                <h4 class="font-fir"><span id="ETA"></span> Uhr</h4>
+                <img src="{{ URL::asset('images/map.png') }}" alt="" style="width:300px">
             </div>
         </div>
 

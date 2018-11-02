@@ -43,3 +43,11 @@
         </div>
     </div>
 @endsection
+
+@section('includes')
+    <script>
+        setInterval(function () {
+            window.location = 'http://localhost/digpopcorn/public/stats';
+        }, 30000);
+    </script>
+@endsection

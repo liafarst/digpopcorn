@@ -8,6 +8,7 @@ use App\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Faker\Provider\DateTime;
+use App\Helpers\CustomHelpers;
 
 class OrdersController extends Controller {
 
@@ -71,17 +72,20 @@ class OrdersController extends Controller {
         $order->email = $email;
         $order->company = $company;
 
-        $orders = Order::where('status', 'RECEIVED')->get();
+        $orders = Order::whereDate('created_at', Carbon::today())->where('status', 'RECEIVED')->orderBy('created_at', 'desc')->take(15)->get();
 
         if (sizeof($orders) > 10) {
-            $seconds = 0;
+            $minutes = 0;
             $i = 0;
             foreach ($orders as $ord) {
-                $diff = strtotime($ord->updated_at) - strtotime($ord->created_at);
-                $seconds += $diff;
+                $diff = CustomHelpers::timeToMinutes($ord->ready_at) - CustomHelpers::timeToMinutes($ord->ordered_at);
+                if ($diff > 15) {
+                    continue;
+                }
+                $minutes += $diff;
                 $i++;
             }
-            $order->ETA = date('H:i', strtotime('now +' . (floor($seconds / $i)) . ' seconds'));
+            $order->ETA = date('H:i', strtotime('now +' . (floor($minutes / $i)) . ' minutes'));
         } else {
             $order->ETA = date('H:i', strtotime('now +3 minutes'));
         }
